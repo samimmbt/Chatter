@@ -1,0 +1,113 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.link {
+  display: inline-block;
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+#h6-login-signup{
+  color: #787586;
+}
+
+.inp-p {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  border-radius: 25px;
+  background: #242424;
+  box-shadow: inset 5px 5px 8px #151515, inset -5px -5px 8px #333333;
+  border: solid 2px #242424;
+  width: 38vw;
+  height: 3.5vh;
+  padding: calc((1vh + 1vw) / 2);
+}
+
+.inp-label{
+  position: absolute;
+  margin-bottom: 10vh;
+  margin-left: -30vw;
+  color: #afafaf;
+  opacity: 0.75;
+}
+
+.inp[type='text'],
+.inp[type='email'] {
+  border: none;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s;
+}
+
+.inp[type='email']::placeholder {
+  font-weight: 700;
+  color: #424242;
+}
+.inp:focus-visible{
+  outline: none;
+}
+.inp:focus-visible .inp-p{
+  box-shadow: inset 7px 7px 8px #151515,
+    inset -7px -7px 8px #333333;
+}
+
+.inp-btn-p{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
+.inp-btn{
+  border-radius: 15px;
+  background: linear-gradient(145deg, #202020, #272727);
+  box-shadow: 15px 15px 20px #191919,
+    -15px -15px 20px #2f2f2f;
+  border: solid 2px #242424;
+  width: 20vw;
+  height: 4.5vh;
+  color: #FAF7FF;
+  transition: all 0.1s;
+}
+
+.inp-btn:active {
+  border-radius: 15px;
+  background: linear-gradient(145deg, #202020, #272727);
+  box-shadow: 9px 9px 18px #191919,
+    -9px -9px 18px #2f2f2f;
+  transform: scale(0.99);
+}
