@@ -1,6 +1,6 @@
 import '../../index.css'
 import { useState, useEffect } from 'react'
-const InputComp = ({ type, id, placeholder, value, labell, timer }) => {
+const InputComp = ({ type, id, placeholder, value, labell, timer,isEmail }) => {
   const [emailValid, setEmailValid] = useState(true);
 
   const validateEmail = (email) => {
@@ -8,13 +8,20 @@ const InputComp = ({ type, id, placeholder, value, labell, timer }) => {
     return re.test(String(email).toLowerCase());
   }
   const handleInputChange = (e) => {
-    setEmailValid(validateEmail(e.target.value));
+    const email = e.target.value
+    const isValid = validateEmail(email)
+    setEmailValid(isValid)
+    
+    if(isValid){
+      isEmail(
+        email
+      )
+    }
   }
-
   return (
     <div className='inp-p'>
-      {labell && <label for={id} className='inp-label'>{labell}</label>}
-      <input id={id} className="inp" type={type} value={value} placeholder={placeholder} onChange={handleInputChange} />{timer && <div id='timer'>01:00</div>}
+      {labell && <label htmlFor={id} className='inp-label'>{labell}</label>}
+      <input id={id} className="inp" type={type} value={value} placeholder={placeholder} onBlur={handleInputChange} />{timer && <div id='timer'>01:00</div>}
       {/*
 		<p class="helper helper1">email@domain.com1</p>
 		<p class="helper helper2">email@domain.com2</p> */}
