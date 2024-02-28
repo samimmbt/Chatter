@@ -1,28 +1,39 @@
 import InputComp from "../Input/InputComp";
 import '../../index.css'
 import { useState, useEffect } from 'react'
-export default function Verifier({ id, timerin, getVerifedValue }) {
-    let [timer, setTimer] = useState()
+export default function Verifier({ id, getVerifedValue, timeout }) {
+    let [getCode, setGetCode] = useState(false)
+    const data = {
+        email: {
+            type: "email",
+            id: id,
+            placeholder: "Email Address",
+            labell: "Email",
+            timer: false
+        }, code: {
+            type: "text",
+            id: id,
+            placeholder: "Code",
+            labell: "Code",
+            timer:true
+        }
+    }, setData = () => { return (data.email) }, setData1 = () => { return (data.code) };
 
-    useEffect(() => {
-        if (timerin) {
-            setTimer(true)
-        } else {
-            setTimer(false)
-        }
-    }, [timerin])
-    
-    const isValid = (validity) => {
-        getVerifedValue(validity)
-        if (validity) {
-            setTimer(true)
-        } else {
-            setTimer(false)
-        }
-    }
+    const codeSent = (e) => {
+        getVerifedValue(e.email)
+        timeout(e.istimeout)
+        setGetCode(e.valid)
+        // if (e.email.length >= 5) {
+        //     setGetCode(true)
+        // } else {
+        //     setGetCode(false)
+        // }
+    };
+
     return (
         <>
-            <InputComp id={id} className="inp" type='email' placeholder='Email Address' timer={timer} labell='Email' isEmail={isValid} />
+            {!getCode && <InputComp className="inp" inpData={setData} callback={codeSent} />}
+            {getCode && <InputComp className="inp code" inpData={setData1} callback={codeSent}/>}
         </>
     )
 }

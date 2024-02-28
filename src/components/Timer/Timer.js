@@ -10,7 +10,7 @@ export function TimerHour(hour) {
 
 export function TimerMin(min, callback) {
     let sec = 59;
-    const timer = setInterval(() => {   
+    const timer = setInterval(() => {
         if (min === 0 && sec === 0) {
             clearInterval(timer);
             return;
@@ -25,3 +25,16 @@ export function TimerMin(min, callback) {
     }, 1000);
 }
 
+export function TimerSec(sec, callback) {
+    const timer = setInterval(() => {
+        if (sec === 0) {
+            clearInterval(timer);
+            return;
+        }
+        if (sec >= 0) {
+
+            sec--
+        }
+        callback(`${sec}`);
+    }, 1000);
+}
