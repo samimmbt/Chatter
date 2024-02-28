@@ -3,26 +3,16 @@ import './index.css'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import InputComp from './components/Input/InputComp'
+import { Outlet } from "react-router-dom";
 function App() {
   let usr = localStorage.getItem("usr")
   // console.log(usr);
-  if (usr != null) {
-    console.log("sign up" + usr);
-    return (
-      <Signup />
-    )
-  } else if (usr == null || usr.logged == false) {
-    console.log("log in" + usr);
-    return (
-        <Login />
-    )
-  } else if (usr != null && usr.logged == true) {
-    console.log("App" + usr);
-
+  if (usr == null || usr.logged == false) {
+    return <Navigate to="/" replace />
+  } else {
     return (
       <>
-
-        <InputComp />
+        <Outlet/>
       </>
     )
   }
