@@ -15,14 +15,19 @@ export default function Verifier({ id, getVerifedValue, timeout }) {
             id: id,
             placeholder: "Code",
             labell: "Code",
-            timer:true
+            timer: true
         }
-    }, setData = () => { return (data.email) }, setData1 = () => { return (data.code) };
+    }, setData = () => {
+        return (data.email)
+    }, setData1 = () => {
+        return (data.code)
+        };
 
     const codeSent = (e) => {
         getVerifedValue(e.email)
-        timeout(e.istimeout)
-        setGetCode(e.valid)
+        timeout(e.isTimeout)
+        setGetCode(e.isValid)
+        console.log(e);
         // if (e.email.length >= 5) {
         //     setGetCode(true)
         // } else {
@@ -33,7 +38,7 @@ export default function Verifier({ id, getVerifedValue, timeout }) {
     return (
         <>
             {!getCode && <InputComp className="inp" inpData={setData} callback={codeSent} />}
-            {getCode && <InputComp className="inp code" inpData={setData1} callback={codeSent}/>}
+            {getCode && <InputComp className="inp code" inpData={setData1} callback={codeSent} />}
         </>
     )
 }

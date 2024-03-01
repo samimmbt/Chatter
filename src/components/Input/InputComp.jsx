@@ -5,11 +5,11 @@ import Button from '../Button/Button';
 import Alert from '../Bubble/Alert';
 const InputComp = ({ inpData, callback}) => {
   let [mytimer, setMyTimer] = useState("01:00")
-  let [emailValid, setEmailValid] = useState(false);
-  let [timer, setTimer] = useState(false)
+  let [validEmail, setValidEmail] = useState(false);
   let [email, setEmail] = useState(null)
-  let [timeOut, setTimeout] = useState(false)
+  let [isTimeout, setIsTimeout] = useState(false)
   const [alertMessage, setAlertMessage] = useState(null);
+  
   const validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -17,39 +17,55 @@ const InputComp = ({ inpData, callback}) => {
 
 
   const timerCode = () => {
-    const userinp = document.getElementById(inpData().id).value
-    const valid = validateEmail(userinp)
+    const userInput = document.getElementById(inpData().id).value;
+    const isValidEmail = validateEmail(userInput);
+    // console.log(isValidEmail,userInput);
+    if (isValidEmail) {
+        setEmail(userInput);
+        setValidEmail(true);
 
-    if (valid) {
-      setEmail(userinp)
-      setEmailValid(valid)// set this to true
-      const data = {
-        email: email,
-        istimeout: timeOut,
-        valid: emailValid
-      }
-      console.log(data);
-      callback(data)
-      setTimer(true)
+        // const data = {
+        //     email: userInput,
+        //     isTimeout: isTimeout,
+        //     isValid: validEmail
+        // };
 
-      // Start Timer 
-      TimerMin(0, (time) => {
-        setMyTimer(time)
-        // checking if time is out
-        if (time.match("0:0")) {
-          setTimeout(true)
-          data.istimeout = true
-          setTimer(false)
-          callback(data)
-        }
-      })
-    }else{
-      setAlertMessage("Invalid email address")
+        // callback(data); // Send email and timer status to parent component
+    } else {
+        setAlertMessage("Invalid email address");
+        // Additional error handling if needed
     }
-    // if (timeOut) {
+};
 
-    // }
+useEffect(() => {
+if (inpData().timer) {
+  TimerMin(0, (time) => { // Timer duration set to 1 minute (60 seconds)
+      setMyTimer(time);
+      if (time === "00:00") {
+          setIsTimeout(true);
+          const data = {
+            email: email,
+            isTimeout: isTimeout,
+            isValid: validEmail
+        };
+          data.isTimeout = true;
+          callback(data);
+      }
+  });
+}
+},[inpData(), callback,isTimeout]);
+
+useEffect(() => {
+  if (validEmail && !isTimeout) {
+      const data = {
+          email: email,
+          isTimeout: isTimeout,
+          isValid: validEmail
+      };
+      callback(data);
   }
+}, [validEmail, email, isTimeout, callback]);
+
   const removeError = (erorr)=>{
     if(erorr){
       setAlertMessage(null)
@@ -62,12 +78,9 @@ const InputComp = ({ inpData, callback}) => {
       {inpData().labell && <label htmlFor={inpData().id} className='inp-label'>{inpData().labell}</label>}
       <input id={inpData().id} className="inp" type={inpData().type} value={inpData().value} placeholder={inpData().placeholder} />
       {inpData().timer && <div id='timer'>{mytimer}</div>}
-      {!inpData().timer && <Button value={timeOut ? "Resend" : "Send Code"} small={true} click={timerCode} />}
-      {/*
-		<p class="helper helper1">email@domain.com1</p>
-		<p class="helper helper2">email@domain.com2</p> */}
+      {!inpData().timer && <Button value={isTimeout ? "Resend" : "Send Code"} small={true} click={timerCode} />}
     </div>
-    {alertMessage && <Alert title='Error' message={alertMessage} duration={30} timeout={removeError}/>}
+    {alertMessage && <Alert title='Error' message={alertMessage} duration={20} timeout={removeError}/>}
     </div>
   )
 }
