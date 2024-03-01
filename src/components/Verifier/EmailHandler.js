@@ -1,19 +1,20 @@
 import emailjs from '@emailjs/browser';
-export default function sendTo(mail, code) {
-    emailjs.init({
-        publicKey: "s9e-8A8ltIc21Fbtc",
-    })
-
-    emailjs.send("service_tgx4l9o", "template_f8rwu2g", {
-        publicKey: 's9e-8A8ltIc21Fbtc',
+import {getEmailData} from '../Connection/DataHandler'
+export default async function sendTo(mail, code) {
+   try{
+    /*if(mail!== null && code !== null){
+    const emailData = await getEmailData('ajdy236dvasu623bjs721028456zxjb9');
+    emailjs.send(emailData.service,emailData.template , {
+        publicKey:emailData.pub_key,
         to_name: mail,
         message: code
-    }).then(
-        () => {
+    }).then(() => {
             console.log('SUCCESS!');
-        },
-        (error) => {
+        }).catch((error) => {
             console.log('FAILED...', error.text);
-        },
-    )
+        })
+    }*/
+} catch (error) {
+    console.error('Error sending email:', error);
+  }
 }
