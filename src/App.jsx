@@ -1,22 +1,25 @@
-import { useState } from 'react'
-import './index.css'
-import Login from './components/Login'
-import Signup from './components/Signup'
-import InputComp from './components/Input/InputComp'
-import { Outlet } from "react-router-dom";
-function App() {
-  let usr = localStorage.getItem("usr")
-  // console.log(usr);
-  if (usr == null || usr.logged == false) {
-    return <Navigate to="/" replace />
-  } else {
-    return (
-      <>
-        <Outlet/>
-      </>
-    )
-  }
+import React, { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 
+function App() {
+  const usr = localStorage.getItem('usr');
+  const userObj = JSON.parse(usr);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userObj || !userObj.logged) {
+      console.log('Not logged in');
+      navigate('/'); // Redirect to login page
+    } else {
+      console.log('User is logged in');
+    }
+  }, []); // Empty dependency array ensures this effect runs once on component mount
+
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 }
 
-export default App
+export default App;
