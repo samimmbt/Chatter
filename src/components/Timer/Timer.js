@@ -21,7 +21,7 @@ export function TimerMin(min, callback) {
         } else {
             sec--;
         }
-        callback(`${min}:${sec}`);
+        callback(`${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`);
     }, 1000);
 }
 
