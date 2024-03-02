@@ -1,16 +1,26 @@
-export default function ChatFooter(data) {
-    const sendMessage=()=>{
-        const message = document.getElementById('messageInput').value
-        // data(message) 
-        console.log(message);
+import { useState } from "react";
+export default function ChatFooter({data, socket}) {
+    const [message, setMessage] = useState('');
+    const usr = localStorage.getItem('usr');
+    const userObj = JSON.parse(usr);
+    const sendMessage = () => {
+        if (message.trim() && userObj.logged) {
+            socket.emit('message', {
+              text: message,
+              name: userObj.name,
+              id: `${socket.id}${Math.random()}`,
+              socketID: socket.id,
+            });
+          }
+          setMessage('');
     }
     return (
-        <div class="messageInputBox">
-            <div class="fileUploadWrapper">
-                <label for="file">
+        <div className="messageInputBox">
+            <div className="fileUploadWrapper">
+                <label htmlFor="file">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 337 337">
                         <circle
-                            stroke-width="20"
+                            strokeWidth="20"
                             stroke="#6c6c6c"
                             fill="none"
                             r="158.5"
@@ -18,23 +28,23 @@ export default function ChatFooter(data) {
                             cx="168.5"
                         ></circle>
                         <path
-                            stroke-linecap="round"
-                            stroke-width="25"
+                            strokeLinecap="round"
+                            strokeWidth="25"
                             stroke="#6c6c6c"
                             d="M167.759 79V259"
                         ></path>
                         <path
-                            stroke-linecap="round"
-                            stroke-width="25"
+                            strokeLinecap="round"
+                            strokeWidth="25"
                             stroke="#6c6c6c"
                             d="M79 167.138H259"
                         ></path>
                     </svg>
-                    <span class="tooltip">Add an image</span>
+                    <span className="tooltip">Add an image</span>
                 </label>
                 <input type="file" id="file" name="file" />
             </div>
-            <input required="" placeholder="Message..." type="text" id="messageInput" />
+            <input required="" placeholder="Message..." type="text" id="messageInput" onChange={(e) => setMessage(e.target.value)} />
             <button id="sendButton" onClick={sendMessage}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
                     <path
@@ -42,9 +52,9 @@ export default function ChatFooter(data) {
                         d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
                     ></path>
                     <path
-                        stroke-linejoin="round"
-                        stroke-linecap="round"
-                        stroke-width="33.67"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                        strokeWidth="33.67"
                         stroke="#6c6c6c"
                         d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888"
                     ></path>

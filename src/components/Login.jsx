@@ -3,7 +3,6 @@ import Button from "./Button/Button"
 import Verfier from "./Verifier/Verifier"
 import { useState,useEffect } from "react"
 import socketIO from 'socket.io-client';
-import sendTo from './Verifier/EmailHandler'
 // const socket = socketIO.connect('http://localhost:3000');
 const Login = () => {
     const [emailin, setemailin] = useState()
@@ -24,7 +23,6 @@ const Login = () => {
     }, []);
     const sendCode = () => {
         setCodeSent(true)
-        sendTo().then().catch();
     }
     const timer = (state) => {
         setDisabled(state)

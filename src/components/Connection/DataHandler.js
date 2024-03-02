@@ -5,6 +5,21 @@ import axios from 'axios'
 const serverUrl = 'http://localhost:3000'; 
 
 // Function to make a GET request to the '/email' route
+
+async function get(path){
+  try {
+    const response = await axios.get(`${serverUrl}${path}`,{
+        params:{
+            id:inp
+        }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching email data:', error.message);
+    return null;
+  }
+}
 export async function getEmailData(inp) {
   try {
     const response = await axios.get(`${serverUrl}/email/${inp}`,{

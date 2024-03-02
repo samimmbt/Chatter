@@ -7,8 +7,8 @@ export default function ChatList({list}) {
     }
     return(
         <div id="chatList">
-            {list.map(message=>{
-                <UserBox key={message.id} data={message} click={openChat}/>
+            {list.map((user)=>{
+                return <UserBox key={user.id} data={user} click={openChat}/>
             })}
         </div>
     )

@@ -8,7 +8,9 @@ import ErrorPage from './components/Error/ErrorPage.jsx';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import ChatContainer from './ChatContainer.jsx';
+import socketIO from 'socket.io-client';
 
+const socket = socketIO/*.connect('http://localhost:3000');*/
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
       [
         {
           index:true,
-          element: <ChatContainer />,
+          element: <ChatContainer socket={socket}/>,
         }
       ]
   }
