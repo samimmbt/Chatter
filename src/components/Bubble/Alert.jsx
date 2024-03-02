@@ -22,7 +22,7 @@ const Alert = ({ title, message, duration, timeout }) => {
     return (
         <div className="alert">
             <div className="title">{title}</div>
-            <div className="messageBox">{message}</div>
+            <div id="alertBox">{message}</div>
             <div className="timeline" style={style}></div>
         </div>
     )

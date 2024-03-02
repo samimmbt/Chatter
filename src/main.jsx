@@ -9,13 +9,19 @@ import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import ChatContainer from './ChatContainer.jsx';
 import socketIO from 'socket.io-client';
+import SetUserData from './components/SetUserData.jsx';
 
-const socket = socketIO/*.connect('http://localhost:3000');*/
+const socket = socketIO.connect('http://localhost:3000');
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
-    errorElement: <ErrorPage />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "/profile",
+    element: <SetUserData socket={socket}/>,
+    errorElement: <ErrorPage />
   },
   {
     path: "/signup",

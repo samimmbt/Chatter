@@ -6,25 +6,26 @@ export default function Chat({ socket, messages }) {
     const userObj = JSON.parse(usr);
     return (
         <div id="chatsContainer">
-            <br/>
-            {messages.map((msg) => {
-                const data = myData(msg,[])
-                 return (data.name === userObj.name ? 
-                <MessageBox Data={data} me={true}  key={`${data.name}${Math.random()}`} />
-                :
-                <MessageBox Data={data} key={`${data.name}${Math.random()}`} />
-                 )
-            })}
-            <br/>
-            <br/>
+            {messages === undefined ? <p> Nothing Here</p> :
+                messages.map((msg) => {
+                    const data = myData(msg, [])
+                    return (data.name === userObj.name ?
+                        <MessageBox Data={data} me={true} key={`${data.name}${Math.random()}`} />
+                        :
+                        <MessageBox Data={data} key={`${data.name}${Math.random()}`} />
+                    )
+                })}
+            <br />
+            <br />
             <ChatFooter />
         </div>
     )
 
-    function myData(msg,data) {
+    function myData(msg, data) {
         data.name = msg.from.name;
         data.message = msg.msg;
         data.time = msg.time;
+        data.seen = msg.seen
         return data
     }
 }
