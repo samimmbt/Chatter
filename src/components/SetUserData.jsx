@@ -54,10 +54,13 @@ export default function SetUserData({ socket }) {
             email: email,
             name: name,
             userId: userId,
-            token: socket.id
+            token: socket.id,
+            logged:true
         }
         const result = sendUserData(data);
-        console.log(result);
+        if(result){
+            localStorage.setItem('usr',{"logged":true,"name":name})
+        }
     }
     const style = {
         h1: {

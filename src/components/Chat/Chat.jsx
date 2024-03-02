@@ -17,7 +17,7 @@ export default function Chat({ socket, messages }) {
                 })}
             <br />
             <br />
-            <ChatFooter />
+            <ChatFooter socket={socket}/>
         </div>
     )
 
