@@ -1,8 +1,7 @@
 import Button from "./Button/Button";
 import MyInput from "./Input/MyInput";
 import { useEffect, useState } from "react";
-import { useNavigate,useLocation } from "react-router-dom";
-import { sendUserData } from "./Connection/DataHandler";
+import { useNavigate, useLocation } from "react-router-dom";
 export default function SetUserData({ socket }) {
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,6 +16,15 @@ export default function SetUserData({ socket }) {
             navigate('/')
         }
     }, [])
+
+    useEffect(() => {
+        socket.on('loginRes', (data) => {
+                localStorage.setItem('usr', `{ "logged": ${data.logged}, "name": "${data.name}","userid":"${data.userId}"}`)
+                navigate("../app")
+            
+        })
+    }, [socket])
+
     const inpData = {
         name: {
             type: "text",
@@ -40,27 +48,24 @@ export default function SetUserData({ socket }) {
         return (inpData.name)
     }, setData2 = () => {
         return (inpData.userid)
-    },setData3 = () => {
+    }, setData3 = () => {
         return (inpData.email)
     }, getnameVal = (inp) => {
         setname(inp)
     }, getUserIdVal = (inp) => {
         setUserId(inp)
-    },getEmailVal = (inp)=>{
+    }, getEmailVal = (inp) => {
         setEmail(inp)
     }, saveEvent = () => {
-        console.log(socket.id);
+        // console.log(socket.id);
         const data = {
             email: email,
             name: name,
             userId: userId,
             token: socket.id,
-            logged:true
+            logged: true
         }
-        const result = sendUserData(data);
-        if(result){
-            localStorage.setItem('usr',{"logged":true,"name":name})
-        }
+        socket.emit('login', data)
     }
     const style = {
         h1: {
@@ -73,7 +78,7 @@ export default function SetUserData({ socket }) {
     }
     return (
         <>
-        <h1 style={style.h1}>CHATTER</h1>
+            <h1 style={style.h1}>CHATTER</h1>
             <MyInput inpData={setData} val={getnameVal} />
             <MyInput inpData={setData2} val={getUserIdVal} />
             <MyInput inpData={setData3} val={getEmailVal} />
