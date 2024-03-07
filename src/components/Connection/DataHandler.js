@@ -35,14 +35,29 @@ export async function getEmailData(inp) {
   }
 }
 
-export async function sendUserData(data) {
+export async function getUserData(userid) {
   try {
-    axios.post(`${serverUrl}/`, data).then(res => {
-      return res.data
-    })
-  } catch (error) {
+    const response = await axios.get(`${serverUrl}/user/${userid}`, {
+      params: {
+        id: userid
+      }
+    });
 
-    console.error('Server do not want this user:', error.message);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user data:', error.message);
     return null;
   }
 }
+
+// export async function sendUserData(data) {
+//   try {
+//     axios.post(`${serverUrl}/`, data).then(res => {
+//       return res.data
+//     })
+//   } catch (error) {
+
+//     console.error('Server do not want this user:', error.message);
+//     return null;
+//   }
+// }
