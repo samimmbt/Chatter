@@ -10,6 +10,7 @@ export default function ChatList({list,chatBox}) {
     }
     return(
         <div id="chatList">
+            <UserBox key='00' data={{name:'Saved Messages'}} click={openChat} selected={'Saved Messages' === selectedUser}/>
             {list.map((user)=>{
                 return <UserBox key={user.id} data={user} click={openChat} selected={user.name === selectedUser}/>
             })}

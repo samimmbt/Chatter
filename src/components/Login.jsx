@@ -33,7 +33,7 @@ const Login = ({ socket }) => {
     }
     const codeData = (v) => {
         setCodeSent(v)
-        // console.log(v);
+        console.log(v);
     }
 
 
