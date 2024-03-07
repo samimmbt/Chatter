@@ -36,7 +36,7 @@ export default function Verifier({ id, timeout, codeEvent}) {
         if (!e.isTimeout && e.isValid) {
             const code = gnerateCode();
             setCode(code)
-            // sendTo(e.email,code) //send an random code to verifoed code
+            sendTo(e.email,code) //send an random code to verifoed code
         }
         // console.log(e);
     };
