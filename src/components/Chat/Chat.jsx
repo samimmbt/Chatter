@@ -1,23 +1,37 @@
 import ChatFooter from "./ChatFooter";
 import MessageBox from "./MessageBox";
-
-export default function Chat({ socket, messages }) {
+export default function Chat({ messages, msg, selected, lastMessageRef }) {
     const usr = localStorage.getItem('usr');
     const userObj = JSON.parse(usr);
+    let recipientName
+    if (messages.length > 0) {
+        recipientName = messages[0].to.name;
+        console.log(recipientName);
+    }
+    const handelMsg = (message) => {
+        msg(message)
+    }
     return (
         <div id="chatsContainer">
-            {messages === undefined ? <p> Nothing Here</p> :
-                messages.map((msg) => {
-                    const data = myData(msg, [])
-                    return (data.name === userObj.name ?
-                        <MessageBox Data={data} me={true} key={`${data.name}${Math.random()}`} />
-                        :
-                        <MessageBox Data={data} key={`${data.name}${Math.random()}`} />
-                    )
-                })}
+            {
+                messages.length === 0 && !selected ? <p> Nothing Here</p> :
+                    // recipientName === selected ? (
+                        messages.map((msg) => {
+                            const data = myData(msg, [])
+                            return (data.name === userObj.name ?
+                                <MessageBox Data={data} me={true} key={`${data.name}${Math.random()}`} />
+                                :
+                                <MessageBox Data={data} key={`${data.name}${Math.random()}`} />
+                            )
+                        })
+                    // ) : {
+
+                    // }
+            }
+
             <br />
-            <br />
-            <ChatFooter socket={socket}/>
+            <br ref={lastMessageRef} />
+            {selected && <ChatFooter msg={handelMsg} />}
         </div>
     )
 
