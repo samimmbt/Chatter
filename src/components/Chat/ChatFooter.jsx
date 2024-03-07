@@ -1,18 +1,10 @@
 import { useState } from "react";
-export default function ChatFooter({data, socket}) {
+export default function ChatFooter({msg }) {
     const [message, setMessage] = useState('');
-    const usr = localStorage.getItem('usr');
-    const userObj = JSON.parse(usr);
+
     const sendMessage = () => {
-        if (message.trim() && userObj.logged) {
-            socket.emit('message', {
-              text: message,
-              name: userObj.name,
-              id: `${socket.id}${Math.random()}`,
-              socketID: socket.id,
-            });
-          }
-          setMessage('');
+        msg(message)
+        setMessage('')
     }
     return (
         <div className="messageInputBox">
@@ -44,7 +36,7 @@ export default function ChatFooter({data, socket}) {
                 </label>
                 <input type="file" id="file" name="file" />
             </div>
-            <input required="" placeholder="Message..." type="text" id="messageInput" onChange={(e) => setMessage(e.target.value)} />
+            <input required="" placeholder="Message..." value={message} type="text" id="messageInput" onChange={(e) => setMessage(e.target.value)} />
             <button id="sendButton" onClick={sendMessage}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
                     <path
