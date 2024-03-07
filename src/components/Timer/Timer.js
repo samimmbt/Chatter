@@ -38,3 +38,16 @@ export function TimerSec(sec, callback) {
         callback(`${sec}`);
     }, 1000);
 }
+
+export function currentTime() {
+    const date = new Date();
+    const dataOutput = {
+        day:date.getDay() ,
+        month: date.getMonth() ,
+        year:date.getFullYear(),
+        hour:date.getHours(),
+        minute:date.getMinutes(),
+        second:date.getSeconds()
+    }
+    return dataOutput
+}
